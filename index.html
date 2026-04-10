@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Yajaira 💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(ellipse at bottom, #020111 0%, #000000 100%);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* BOTÓN */
+#inicio {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button {
+    font-size: 30px;
+    padding: 15px 30px;
+    background: pink;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* CONTENIDO */
+#contenido {
+    display: none;
+}
+
+/* ESTRELLAS */
+.estrella {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: brillar 3s infinite;
+}
+
+@keyframes brillar {
+    50% { opacity: 0.2; }
+}
+
+/* FUGACES */
+.fugaz {
+    position: fixed;
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(white, transparent);
+    transform: rotate(45deg);
+    animation: caer 5s infinite;
+}
+
+@keyframes caer {
+    from { top: -10%; left: 20%; opacity: 1; }
+    to { top: 100%; left: 80%; opacity: 0; }
+}
+
+/* FLORES */
+.flor {
+    position: fixed;
+    animation: flotar linear infinite;
+}
+
+@keyframes flotar {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+
+/* MENSAJE CENTRADO */
+.mensaje {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 40px;
+    color: pink;
+    text-align: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid pink;
+
+    width: 0;
+    animation: escribir 5s steps(45) forwards, cursor 1s infinite;
+
+    z-index: 10;
+}
+
+@keyframes escribir {
+    to { width: 100%; }
+}
+
+@keyframes cursor {
+    50% { border-color: transparent; }
+}
+
+/* FUEGOS ARTIFICIALES */
+.particula {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="inicio">
+    <button onclick="iniciar()">💖 Tócame 💖</button>
+</div>
+
+<div id="contenido">
+    <div class="mensaje">
+        Eres mi chica ideal y especial Yajaira 💖
+    </div>
+</div>
+
+<script>
+
+function iniciar() {
+    document.getElementById("inicio").style.display = "none";
+    document.getElementById("contenido").style.display = "block";
+
+    crearEstrellas();
+    crearFlores();
+    crearFugaces();
+
+    setInterval(fuegos, 1200);
+}
+
+// ⭐ estrellas
+function crearEstrellas() {
+    for (let i = 0; i < 120; i++) {
+        let s = document.createElement("div");
+        s.className = "estrella";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.left = Math.random() * 100 + "%";
+        document.body.appendChild(s);
+    }
+}
+
+// 🌹🌻 flores
+function crearFlores() {
+    for (let i = 0; i < 25; i++) {
+        let f = document.createElement("div");
+        f.className = "flor";
+        f.innerHTML = Math.random() > 0.5 ? "🌹" : "🌻";
+        f.style.left = Math.random() * 100 + "%";
+        f.style.fontSize = (20 + Math.random() * 30) + "px";
+        f.style.animationDuration = (5 + Math.random() * 5) + "s";
+        document.body.appendChild(f);
+    }
+}
+
+// 🌠 fugaces
+function crearFugaces() {
+    for (let i = 0; i < 5; i++) {
+        let f = document.createElement("div");
+        f.className = "fugaz";
+        document.body.appendChild(f);
+    }
+}
+
+// 🎆 fuegos realistas
+function fuegos() {
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight / 2;
+
+    for (let i = 0; i < 40; i++) {
+        let p = document.createElement("div");
+        p.className = "particula";
+
+        let angulo = Math.random() * 2 * Math.PI;
+        let velocidad = Math.random() * 4 + 2;
+
+        let vx = Math.cos(angulo) * velocidad;
+        let vy = Math.sin(angulo) * velocidad;
+
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+        p.style.background = `hsl(${Math.random()*360},100%,60%)`;
+
+        document.body.appendChild(p);
+
+        let vida = 60;
+
+        let anim = setInterval(() => {
+            let left = parseFloat(p.style.left);
+            let top = parseFloat(p.style.top);
+
+            p.style.left = left + vx + "px";
+            p.style.top = top + vy + "px";
+
+            p.style.opacity = vida / 60;
+
+            vida--;
+
+            if (vida <= 0) {
+                clearInterval(anim);
+                p.remove();
+            }
+        }, 16);
+    }
+}
+
+</script>
+
+</body>
+</html>
